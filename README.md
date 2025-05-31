@@ -72,5 +72,5 @@ POST /predict
 ```
 
 #### Dodatkowe endpointy
-- GET `/training/status` - status trenowania (done, in_progress, error);
+- GET `/training/status` - status trenowania (done, in_progress, error)
 - GET `/training/error` - opis błędu w trenowaniu

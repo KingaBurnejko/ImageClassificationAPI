@@ -4,3 +4,4 @@ Pillow==11.2.1
 tensorflow==2.13.0
 gunicorn==21.2.0
 tensorflow_intel
+python-dotenv
