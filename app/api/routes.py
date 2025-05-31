@@ -22,9 +22,11 @@ api_blueprint = Blueprint("api", __name__)
 
 model, class_names = load_model_and_labels()
 
+
 @api_blueprint.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
+
 
 @api_blueprint.route("/predict", methods=["POST"])
 def predict():
@@ -85,6 +87,7 @@ def test():
     except Exception as e:
         return render_template("index.html", test_status=f"Error: {str(e)}")
 
+
 @api_blueprint.route("/training/status", methods=["GET"])
 def training_status():
     try:
@@ -103,12 +106,4 @@ def training_error():
         return jsonify({"error": status.get("error")})
     except Exception:
         return jsonify({"error": "status file not found"}), 404
-
-
-@api_blueprint.route("/models", methods=["GET"])
-def list_models():
-    try:
-        models_list = [f for f in os.listdir("data") if f.endswith(".h5")]
-        return jsonify({"models": models_list})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    
