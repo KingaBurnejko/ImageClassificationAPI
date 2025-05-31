@@ -1,24 +1,24 @@
 # 🦋 Image Classification API – rozpoznawanie motyli
 
 Projekt realizuje usługę klasyfikacji obrazów z wykorzystaniem sieci neuronowej ResNet50. Zaimplementowano aplikację webową w Flasku z prostym interfejsem HTML oraz pełnym API umożliwiającym trenowanie, testowanie i predykcję modeli.
-Wykorzystano zbiór danych: [text](https://www.kaggle.com/datasets/gpiosenka/butterfly-images40-species/data), który docelowo można dodać do folderu `data` w głównym pliku projektu.
+Wykorzystano zbiór danych: [Butterfly & Moths Image Classification 100 species](https://www.kaggle.com/datasets/gpiosenka/butterfly-images40-species/data), który docelowo można dodać do folderu `data` w głównym pliku projektu.
 
 ---
-## Uruchomienie lokalnie
+### Uruchomienie lokalnie
 ```
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Uruchomienie aplikacji
+#### Uruchomienie aplikacji
 ```
 python run.py
 ```
 
 Aplikacja będzie dostępna pod http://127.0.0.1:5000/
 
-## Uruchomienie - Docker
+### Uruchomienie - Docker
 
 Zbuduj obraz i uruchom usługę:
 ```
@@ -26,7 +26,15 @@ docker compose up --build
 ```
 Aplikacja będzie dostępna pod http://localhost:5000/
 
-## Trenowanie modelu
+! *Uwaga*: Wymagany jest wcześniej skonfigurowany plik .env.
+Przed uruchomieniem skopiuj plik .env.example jako .env i uzupełnij:
+```
+cp .env.example .env
+```
+
+## Funkcjonalności aplikacji
+
+### Trenowanie modelu
 Endpoint:
 ```
 POST /train
@@ -37,7 +45,7 @@ Opis:
 - Zapisywany jest status do pliku training_status.json
 - Wytrenowany model zapisywany jest jako data/butterfly_model.h5
 
-## Testowanie modelu
+### Testowanie modelu
 Endpoint:
 ```
 POST /test
@@ -45,17 +53,29 @@ POST /test
 
 Opis:
 - Uruchamia testowanie modelu na zbiorze data/valid/
-- Zwraca wartości: loss, accuracy, f1_score
+- Zwraca wartości: loss i accuracy, np.
+```
+{
+  "accuracy": 0.92,
+  "loss": 0.15
+}
+```
 
-## Klasyfikacja obrazu
+### Klasyfikacja obrazu
 Endpoint:
 ```
 POST /predict
 ```
-Parametr: file — przesyłany obraz (format JPG/PNG)
-Zwraca: Klasa i wartość prawdopodobieństwa (np. "class": "Papilio machaon", "confidence": 0.9123)
+Parametr: file - przesyłany obraz (format JPG/PNG)
+Zwraca: Klasa i wartość prawdopodobieństwa, np. 
+```
+{
+  "class": "Papilio machaon",
+  "confidence": 0.912
+}
+```
 
-## Dodatkowe endpointy
-- GET /training/status – status trenowania (done, in_progress, error)
-- GET /training/error – opis błędu w trenowaniu
-- GET /models – lista dostępnych modeli .h5
+#### Dodatkowe endpointy
+- GET /training/status - status trenowania (done, in_progress, error)
+- GET /training/error - opis błędu w trenowaniu
+- GET /models - lista dostępnych modeli .h5
