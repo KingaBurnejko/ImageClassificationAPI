@@ -26,8 +26,8 @@ docker compose up --build
 ```
 Aplikacja będzie dostępna pod http://localhost:5000/
 
-! *Uwaga*: Wymagany jest wcześniej skonfigurowany plik .env.
-Przed uruchomieniem skopiuj plik .env.example jako .env i uzupełnij:
+**! Uwaga**: Wymagany jest wcześniej skonfigurowany plik `.env`.
+Przed uruchomieniem skopiuj plik `.env.example` jako `.env` i uzupełnij:
 ```
 cp .env.example .env
 ```
@@ -39,21 +39,17 @@ Endpoint:
 ```
 POST /train
 ```
-
-Opis:
-- Rozpoczyna trenowanie modelu ResNet50 na danych z folderu data/train/
-- Zapisywany jest status do pliku training_status.json
-- Wytrenowany model zapisywany jest jako data/butterfly_model.h5
+- Rozpoczyna trenowanie modelu ResNet50 na danych z folderu `data/train/`
+- Zapisywany jest status do pliku `training_status.json`
+- Wytrenowany model zapisywany jest jako `data/butterfly_model.h5`
 
 ### Testowanie modelu
 Endpoint:
 ```
 POST /test
 ```
-
-Opis:
-- Uruchamia testowanie modelu na zbiorze data/valid/
-- Zwraca wartości: loss i accuracy, np.
+- Uruchamia testowanie modelu na zbiorze `data/valid/`
+- Zwracane wartości: loss i accuracy, np.
 ```
 {
   "accuracy": 0.92,
@@ -66,16 +62,15 @@ Endpoint:
 ```
 POST /predict
 ```
-Parametr: file - przesyłany obraz (format JPG/PNG)
-Zwraca: Klasa i wartość prawdopodobieństwa, np. 
+- Parametr: file - przesyłany obraz (format JPG/PNG)
+- Zwracane: Klasa i wartość prawdopodobieństwa, np. 
 ```
 {
-  "class": "Papilio machaon",
+  "class": "ADONIS",
   "confidence": 0.912
 }
 ```
 
 #### Dodatkowe endpointy
-- GET /training/status - status trenowania (done, in_progress, error)
-- GET /training/error - opis błędu w trenowaniu
-- GET /models - lista dostępnych modeli .h5
+- GET `/training/status` - status trenowania (done, in_progress, error);
+- GET `/training/error` - opis błędu w trenowaniu
