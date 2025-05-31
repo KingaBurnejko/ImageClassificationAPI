@@ -1,0 +1,11 @@
+__pycache__/
+venv/
+*.h5
+*.json
+*.zip
+data/
+.kaggle/
+data/
+.env
+*.env
+!.env.example 

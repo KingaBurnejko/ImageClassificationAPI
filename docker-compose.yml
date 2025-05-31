@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        - GIT_TOKEN=${GIT_TOKEN}
+        - REPO_URL=${REPO_URL}
+        - BRANCH=${BRANCH}
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped

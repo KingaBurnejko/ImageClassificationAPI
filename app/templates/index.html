@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Classification API</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./../static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Image Classification API</h1>
+
+        <div class="section">
+            <h2>Image classification</h2>
+            <form id="classifyForm" action="/predict" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <br>
+                <button type="submit">Upload and classify</button>
+            </form>
+            <div id="classifyStatus" class="result" style="display: none;">
+                <p class="processing-message"></p>
+                <p><a href="/">Go back</a></p>
+            </div>
+            {% if result %}
+                <div class="result">
+                    <p><strong>Class:</strong> {{ result.class }}</p>
+                    <p><strong>Confidence:</strong> {{ result.confidence }}</p>
+                    <p><a href="/">Go back</a></p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2>Model training</h2>
+            <form id="trainForm" action="/train" method="POST">
+                <button type="submit">Start training</button>
+            </form>
+            <div id="trainStatus" class="result" style="display: none;">
+                <p class="processing-message"></p>
+                <p><a href="/">Go back</a></p>
+            </div>
+            {% if train_status %}
+                <div class="result processing-message">
+                    <p>{{ train_status }}</p>
+                    <p><a href="/">Go back</a></p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2>Model testing</h2>
+            <form id="testForm" action="/test" method="POST">
+                <button type="submit">Test model</button>
+            </form>
+            <div id="testStatus" class="result" style="display: none;">
+                <p class="processing-message"></p>
+                <p><a href="/">Go back</a></p>
+            </div>
+            {% if test_result %}
+                <div class="result">
+                    <p><strong>Loss:</strong> {{ test_result.loss }}</p>
+                    <p><strong>Accuracy:</strong> {{ test_result.accuracy }}</p>
+                    <p><a href="/">Go back</a></p>
+                </div>
+            {% elif test_status %}
+                <div class="result processing-message">
+                    <p>{{ test_status }}</p>
+                    <p><a href="/">Go back</a></p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('classifyForm').addEventListener('submit', function() {
+            document.getElementById('classifyStatus').style.display = 'block';
+            document.querySelector('#classifyStatus .processing-message').textContent = 'Image classification in progress...';
+        });
+
+        document.getElementById('trainForm').addEventListener('submit', function() {
+            document.getElementById('trainStatus').style.display = 'block';
+            document.querySelector('#trainStatus .processing-message').textContent = 'Model training in progress... This may take a while.';
+        });
+
+        document.getElementById('testForm').addEventListener('submit', function() {
+            document.getElementById('testStatus').style.display = 'block';
+            document.querySelector('#testStatus .processing-message').textContent = 'Model testing in progress...';
+        });
+    </script>
+</body>
+</html>
