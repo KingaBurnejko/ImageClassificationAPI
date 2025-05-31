@@ -20,9 +20,6 @@ MODEL_PATH = os.getenv("MODEL_PATH")
 
 api_blueprint = Blueprint("api", __name__)
 
-model, class_names = load_model_and_labels()
-
-
 @api_blueprint.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
@@ -35,6 +32,7 @@ def predict():
 
     file = request.files["file"]
     try:
+        model, class_names = load_model_and_labels()
         img = Image.open(io.BytesIO(file.read())).convert("RGB")
         processed_img = preprocess_image(img)
         predictions = model.predict(processed_img)[0]
